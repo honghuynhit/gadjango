@@ -78,6 +78,7 @@ DATABASES = {
         default=config('DATABASE_URL')
     )
 }
+DISABLE_COLLECTSTATIC=1
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
