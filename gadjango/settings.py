@@ -22,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ig+7ylpm#ztx&$mymggsa@cs_8y2(bg!ngn-y!8l2woxq7l*lj'
+# SECRET_KEY = 'ig+7ylpm#ztx&$mymggsa@cs_8y2(bg!ngn-y!8l2woxq7l*lj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,11 +73,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gadjango.wsgi.application'
 
-# SECRET_KEY = config('SECRET_KEY')
-DEBUG = False
-prod_db  =  dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(prod_db)
-DISABLE_COLLECTSTATIC=1
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+DATABASES = {
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
